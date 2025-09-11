@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resource Server Test UI</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Resource Server Test UI</h1>
+    <button onclick="window.location.href='/oauth2/authorization/oidc-client'">Login with OAuth2</button>
+    <br><br>
+    <button onclick="callApi()">Call Protected API</button>
+    <pre id="result"></pre>
+    <script>
+        function callApi() {
+            fetch('/api/hello')
+                .then(response => {
+                    if (!response.ok) throw new Error('Unauthorized or error: ' + response.status);
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('result').textContent = data;
+                })
+                .catch(err => {
+                    document.getElementById('result').textContent = err;
+                });
+        }
+    </script>
+</body>
+</html>
+
